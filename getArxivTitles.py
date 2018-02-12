@@ -20,7 +20,7 @@ def harvest(arxiv="physics:hep-ex"):
     df = pd.DataFrame(columns=['title'])
     base_url = "http://export.arxiv.org/oai2?verb=ListRecords&"
     url = (base_url +
-           "from=2017-01-01&until=2017-01-31&" +
+           "from=2017-01-01&until=2017-01-10&" +
            "metadataPrefix=arXiv&set=%s"%arxiv)
     
     while True:
