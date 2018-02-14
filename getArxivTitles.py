@@ -1,3 +1,7 @@
+# Code retrieved from http://betatim.github.io/posts/analysing-the-arxiv/ and modified
+# Run in a python 2.7 environment
+# Gets titles of articles on the arXiv with the math tag that were posted in 2017
+
 import time
 import urllib2
 import datetime
@@ -5,11 +9,8 @@ from itertools import ifilter
 from collections import Counter, defaultdict
 import xml.etree.ElementTree as ET
 
-#from bs4 import BeautifulSoup
-#import matplotlib.pylab as plt
 import pandas as pd
 import numpy as np
-#import bibtexparser
 
 pd.set_option('mode.chained_assignment','warn')
 
@@ -20,7 +21,7 @@ def harvest(arxiv="physics:hep-ex"):
     df = pd.DataFrame(columns=['title'])
     base_url = "http://export.arxiv.org/oai2?verb=ListRecords&"
     url = (base_url +
-           "from=2017-01-01&until=2017-01-10&" +
+           "from=2017-01-01&until=2017-12-31&" +
            "metadataPrefix=arXiv&set=%s"%arxiv)
     
     while True:
@@ -80,6 +81,7 @@ def harvest(arxiv="physics:hep-ex"):
             
     return df
 
-df = harvest('math')
+cat = 'math'
+df = harvest(cat)
 
-df.to_csv('arxivTitles', encoding='utf-8', index=False)
+df.to_csv('arXiv'+ cat + 'Titles', encoding='utf-8', index=False)
