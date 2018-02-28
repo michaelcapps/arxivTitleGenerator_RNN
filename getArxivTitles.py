@@ -21,7 +21,7 @@ def harvest(arxiv="physics:hep-ex"):
     df = pd.DataFrame(columns=['title'])
     base_url = "http://export.arxiv.org/oai2?verb=ListRecords&"
     url = (base_url +
-           "from=2017-01-01&until=2017-12-31&" +
+           "from=2016-01-01&until=2017-12-31&" +
            "metadataPrefix=arXiv&set=%s"%arxiv)
     
     while True:
@@ -59,14 +59,13 @@ def harvest(arxiv="physics:hep-ex"):
             if doi is not None:
                 doi = doi.text.split()[0]
                 
-            contents = {'title': info.find(ARXIV+"title").text}#,
+            contents = {'title': (info.find(ARXIV+"title").text).strip('\n')+'\n'}#,
                        # 'id': info.find(ARXIV+"id").text,#arxiv_id.text[4:],
                        # 'abstract': info.find(ARXIV+"abstract").text.strip(),
                        # 'created': created,
                        # 'categories': categories.split(),
                        # 'doi': doi,
                        # }
-
             df = df.append(contents, ignore_index=True)
 
         # The list of articles returned by the API comes in chunks of
@@ -84,4 +83,4 @@ def harvest(arxiv="physics:hep-ex"):
 cat = 'math'
 df = harvest(cat)
 
-df.to_csv('arXiv'+ cat + 'Titles', encoding='utf-8', index=False)
+df.to_csv('arXiv'+ cat + 'Titles_big2', encoding='utf-8', index=False)
